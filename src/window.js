@@ -1,18 +1,18 @@
 let win = {
   navigator: {
-    userAgent: "fake!"
+    userAgent: 'fake!'
   },
   document: {
-    getElementById() {},
-    addEventListener() {},
-    removeEventListener() {},
+    getElementById () {},
+    addEventListener () {},
+    removeEventListener () {},
     documentElement: {
-      setAttribute() {},
+      setAttribute () {}
     }
-  },
+  }
 }
 
-if(typeof window !== "undefined") {
+if (typeof window !== 'undefined') {
   win = window
 }
 
