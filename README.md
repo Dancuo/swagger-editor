@@ -1,4 +1,4 @@
-# Swagger Editor
+# Swedagger
 [![NPM version](https://badge.fury.io/js/swagger-ui.svg)](http://badge.fury.io/js/swagger-editor)
 [![Build Status](https://travis-ci.org/swagger-api/swagger-editor.svg?branch=master)](https://travis-ci.org/swagger-api/swagger-editor)
 [![Code Climate](https://codeclimate.com/github/swagger-api/swagger-editor/badges/gpa.svg)](https://codeclimate.com/github/swagger-api/swagger-editor)
@@ -7,7 +7,7 @@
 
 **🕰️ Looking for the older version of Swagger Editor?** Refer to the [*2.x* branch](https://github.com/swagger-api/swagger-editor/tree/2.x).
 
-Swagger Editor lets you edit [Swagger API specifications](https://github.com/swagger-api/swagger-spec/blob/master/versions/2.0.md) in YAML inside your browser and to preview documentations in real time.
+Swedagger lets you edit [Swagger API specifications](https://github.com/swagger-api/swagger-spec/blob/master/versions/2.0.md) in YAML inside your browser and to preview documentations in real time.
 Valid Swagger JSON descriptions can then be generated and used with the full Swagger tooling (code generation, documentation, etc).
 
 As a brand new version, written from the ground up, there are some known issues and unimplemented features. Check out the [Known Issues](#known-issues) section for more details.
@@ -15,7 +15,7 @@ As a brand new version, written from the ground up, there are some known issues 
 This repository publishes to two different NPM modules:
 
 * [swagger-editor](https://www.npmjs.com/package/swagger-editor) is a traditional npm module intended for use in single-page applications that are capable of resolving dependencies (via Webpack, Browserify, etc).
-* [swagger-editor-dist](https://www.npmjs.com/package/swagger-editor-dist) is a dependency-free module that includes everything you need to serve Swagger Editor in a server-side project, or a web project that can't resolve npm module dependencies.
+* [swagger-editor-dist](https://www.npmjs.com/package/swagger-editor-dist) is a dependency-free module that includes everything you need to serve Swedagger in a server-side project, or a web project that can't resolve npm module dependencies.
 
 If you're building a single-page application, using `swagger-editor` is strongly recommended, since `swagger-editor-dist` is significantly larger.
 
@@ -35,7 +35,7 @@ If you'd like to make code changes to Swagger-Editor, you can start up a Webpack
 
 ##### Browser support
 
-Swagger Editor works in the latest versions of Chrome, Safari, Firefox, Edge and IE11.
+Swedagger works in the latest versions of Chrome, Safari, Firefox, Edge and IE11.
 
 ### Known Issues
 
@@ -57,7 +57,7 @@ docker pull swaggerapi/swagger-editor
 docker run -d -p 80:8080 swaggerapi/swagger-editor
 ```
 
-This will run Swagger Editor (in detached mode) on port 80 on your machine, so you can open it by navigating to `http://localhost` in your browser.
+This will run Swedagger (in detached mode) on port 80 on your machine, so you can open it by navigating to `http://localhost` in your browser.
 
 ### Building and running an image locally
 

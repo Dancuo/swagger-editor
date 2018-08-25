@@ -1,18 +1,12 @@
 {
-  "name": "swagger-editor",
-  "description": "Swagger Editor",
-  "version": "3.6.8",
+  "name": "swedagger",
+  "description": "Swedagger",
+  "version": "1.0.0",
   "main": "dist/swagger-editor.js",
-  "repository": "git@github.com:swagger-api/swagger-editor.git",
+  "repository": "git@github.com:Dancuo/swagger-editor.git",
   "license": "Apache-2.0",
   "contributors": [
-    "(in alphabetical order)",
-    "Anna Bodnia <anna.bodnia@gmail.com>",
-    "Buu Nguyen <buunguyen@gmail.com>",
-    "Josh Ponelat <jponelat@gmail.com>",
-    "Kyle Shockey <kyleshockey1@gmail.com>",
-    "Robert Barnwell <robert@robertismy.name>",
-    "Sahar Jafari <shr.jafari@gmail.com>"
+    "Dancuo Wang <dancuownag@gmail.com>"
   ],
   "scripts": {
     "build": "run-p --aggregate-output build-core build-bundle build-standalone",
