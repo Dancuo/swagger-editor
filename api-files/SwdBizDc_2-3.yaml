@@ -1,0 +1,1521 @@
+openapi: 3.0.0
+# Added by API Auto Mocking Plugin
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/Dancuo/SwdBizDc/2.3
+info:
+  description: This is Sweetome business data collection API 
+  version: "2.3"
+  title: 斯维登营销数据收集API
+  contact:
+    email: dev@sweetome.com
+tags:
+  - name: Send
+    description: 发送营销数据，由麦达提供，BaseUrl 【开发环境】--- http://101.132.243.202/v1（外网）, http://10.90.1.182:9000/v1（内网） 【生产环境】http://10.90.1.183:9000/v1（内网）
+  - name: Info
+    description: 获取相关实体数据信息，由斯维登提供，BaseUrl（内网） 【开发环境】 http://10.68.200.173:6037/BizDataCollectionService.svc 【生产环境】 http://10.80.200.23:6037/BizDataCollectionService.svc
+paths:
+  /rest/SendItem:
+    post:
+      tags:
+        - Send
+      summary: 发送一条业务数据
+      operationId: SendBizDataItem
+      description: 发送一条业务数据, 
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendBizItemRequest'
+      responses:
+        '201':
+          description: 发送成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResult'
+        '400':
+          description: 发送失败
+  /rest/GetMemberInfo:
+    post:
+      tags:
+        - Info
+      summary: 获取会员信息
+      operationId: GetMemberInfo
+      description: 根据会员ID获取对应的会员信息
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetMemberInfoRequest'
+      responses:
+        '200':
+          description: 获取成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberInfo'
+        '400':
+          description: 无效ID
+        '404':
+          description: 无法找到对应信息
+  /rest/GetWxUserInfo:
+    post:
+      tags:
+        - Info
+      summary: 获取微信用户信息
+      operationId: GetWxUserInfo
+      description: 根据OpenID获取对应的微信用户信息
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetWxUserInfoRequest'
+      responses:
+        '200':
+          description: 获取成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WxUserInfo'
+        '400':
+          description: 无效ID
+        '404':
+          description: 无法找到对应信息
+  /rest/GetOrderInfo:
+    post:
+      tags:
+        - Info
+      summary: 获取订单信息
+      operationId: GetOrderInfo
+      description: 根据订单ID获取对应的订单信息(VRMS订单号需要以VRMS开头)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetOrderInfoRequest'
+      responses:
+        '200':
+          description: 获取成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderInfo'
+        '400':
+          description: 无效ID
+        '404':
+          description: 无法找到对应信息
+  /rest/GetHotelRoomCountInfo:
+    post:
+      tags:
+        - Info
+      summary: 获取门店房间总数信息
+      operationId: GetHotelInfo
+      description: 根据门店ID和日期获取对应的门店各房型对应的房间总数信息
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetHotelRoomCountInfoRequest'
+      responses:
+        '200':
+          description: 获取成功
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/HotelRoomCountInfo'
+        '400':
+          description: 无效ID
+        '404':
+          description: 无法找到对应信息
+  /rest/GetHotelInfo:
+    post:
+      tags:
+        - Info
+      summary: 获取门店信息
+      operationId: GetHotelInfo
+      description: 根据门店ID获取对应的门店信息
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetHotelInfoRequest'
+      responses:
+        '200':
+          description: 获取成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HotelInfo'
+        '400':
+          description: 无效ID
+        '404':
+          description: 无法找到对应信息
+  /rest/GetCheckInInfo:
+    post:
+      tags:
+        - Info
+      summary: 获取入住单信息
+      operationId: GetCheckInInfo
+      description: 根据入住单ID获取对应的入住单信息
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetCheckInInfoRequest'
+      responses:
+        '200':
+          description: 获取成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckInInfo'
+        '400':
+          description: 无效ID
+        '404':
+          description: 无法找到对应信息
+  /rest/GetOrderRateInfo:
+    post:
+      tags:
+        - Info
+      summary: 获取订单价格信息
+      operationId: GetOrderRate
+      description: 根据入住单ID获取对应的订单变价信息
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetOrderRateInfoRequest'
+      responses:
+        '200':
+          description: 获取成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderRateInfo'
+        '400':
+          description: 无效ID
+        '404':
+          description: 无法找到对应信息
+components:
+  schemas:
+    GetMemberInfoRequest:
+      type: object
+      required: 
+        - MemberID
+      properties:
+        MemberID:
+          description: 会员ID
+          type: integer
+          format: int32
+          example: 1
+    GetWxUserInfoRequest:
+      type: object
+      required:
+        - OpenID
+      properties:
+        OpenID:
+          description: 微信OpenID
+          type: string
+          example: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+    GetOrderInfoRequest:
+      type: object
+      required:
+        - OrderNumber
+      properties:
+        OrderNumber:
+          description: 订单编号
+          type: string
+          example: 'CRS9522618'
+    GetHotelInfoRequest:
+      type: object
+      required:
+        - HotelID
+      properties:
+        HotelID:
+          description: 门店ID
+          type: integer
+          format: int32
+          example: 30
+    HotelRoomCountInfo:
+      type: object
+      required:
+        - HotelID
+        - TotalRoomCount
+        - Date
+      properties:
+        HotelID:
+          description: 门店ID
+          type: integer
+          format: int32
+          example: 30
+        Date:
+          description: 日期
+          type: string
+          format: date
+          example: '2017/08/10'
+        UnitTypeInfos:
+          description: 房型数目信息
+          type: array
+          items:
+             $ref: '#/components/schemas/UnitTypeInfo'
+    GetHotelRoomCountInfoRequest:
+      type: object
+      required:
+        - HotelID
+        - Date
+      properties:
+        HotelID:
+          description: 门店ID
+          type: integer
+          format: int32
+          example: 30
+        BeginDate:
+          description: 查询日期
+          type: string
+          format: date
+          example: '2017/8/10'
+    GetCheckInInfoRequest:
+      type: object
+      required:
+        - CheckInID
+      properties:
+        CheckInID:
+          description: 入住单ID
+          type: integer
+          format: int32
+          example: 30221
+    GetOrderRateInfoRequest:
+      type: object
+      required:
+        - OrderNumber
+      properties:
+        OrderNumber:
+          description: 订单编号
+          type: string
+          example: 'CRS9522618'
+    SimpleResult:
+      type: object
+      required:
+        - IsSuccessful
+      properties:
+        IsSuccessful:
+          type: boolean
+          example: true
+        Message:
+          type: string
+          example: 'Received data item successfully!'
+    SendBizItemRequest:
+      type: object
+      required:
+        - BizDataItem
+      properties:
+        BizDataItem:
+          $ref: '#/components/schemas/BizDataItem'
+    BizDataItem:
+      type: object
+      required:
+        - AppType
+        - Event
+        - Time
+      properties:
+        AppType:
+          $ref: '#/components/schemas/BizDataAppTypeEnum'
+        Event:
+          $ref: '#/components/schemas/BizDataEventEnum'
+        Time:
+          type: string
+          format: date-time
+          example: '2018-05-28 09:59:28:123'
+        SessionID:
+          type: string
+          example: 'ye0dtngpqnyeoihycpwv5ulo'
+        Origin:
+          type: string
+          description: 来源
+          example: '营销支持中心'
+        MemberID:
+          type: integer
+          format: int32
+          example: 2368
+        WxOpenID:
+          type: string
+          example: 'oIZz1wcIraxhRnytKSBYOnbYwxnY'
+        HotelID:
+          type: integer
+          format: int32
+          example: '136'
+        MenuUrl:
+          type: string
+          example: 'https://order.sweetome.com/Qinyou/Index'
+        Position:
+          $ref: '#/components/schemas/Position'
+        CityName:
+          type: string
+          example: 'Beijing'
+        OrderInfo:
+          $ref: '#/components/schemas/OrderInfo'
+        CheckInInfo:
+          $ref: '#/components/schemas/CheckInInfo'
+      example:
+        WxOA_Subscribe_Example:
+          $ref: '#/components/examples/WxOA_Subscribe_Example'
+        WxOA_Scan_Example:
+          $ref: '#/components/examples/WxOA_Scan_Example'
+        WxOA_OpenMenu_Example:
+          $ref: '#/components/examples/WxOA_OpenMenu_Example'
+        WxOA_UnSubscribe_Example:
+          $ref: '#/components/examples/WxOA_UnSubscribe_Example'
+        WxMp_Open_Example:
+          $ref: '#/components/examples/WxMp_Open_Example'
+        WxMp_RegisterOrLogin_Example:
+          $ref: '#/components/examples/WxMp_RegisterOrLogin_Example'
+        WxMp_SearchHotelByCity_Example:
+          $ref: '#/components/examples/WxMp_SearchHotelByCity_Example'
+        WxMp_ViewHotel_Example:
+          $ref: '#/components/examples/WxMp_ViewHotel_Example'
+        WxMp_SubmitOrder_Example:
+          $ref: '#/components/examples/WxMp_SubmitOrder_Example'
+        WxMp_OrderFail_Example:
+          $ref: '#/components/examples/WxMp_OrderFail_Example'
+        WxMp_PayStart_Example:
+          $ref: '#/components/examples/WxMp_PayStart_Example'
+        WxMp_PaySuccess_Example:
+          $ref: '#/components/examples/WxMp_PaySuccess_Example'
+        WxMp_PayFail_Example:
+          $ref: '#/components/examples/WxMp_PayFail_Example'
+        WxMp_CancelOrder_Example:
+          $ref: '#/components/examples/WxMp_CancelOrder_Example'
+        WxMp_CancelFail_Example:
+          $ref: '#/components/examples/WxMp_CancelFail_Example'
+        MOS_RegisterOrLogin_Example:
+          $ref: '#/components/examples/MOS_RegisterOrLogin_Example'
+        MOS_GetCurrentPosition_Example:
+          $ref: '#/components/examples/MOS_GetCurrentPosition_Example'
+        MOS_SearchHotelByCity_Example:
+          $ref: '#/components/examples/MOS_SearchHotelByCity_Example'
+        MOS_ViewHotel_Example:
+          $ref: '#/components/examples/MOS_ViewHotel_Example'
+        MOS_ViewRoomType_Example:
+          $ref: '#/components/examples/MOS_ViewRoomType_Example'
+        MOS_SubmitOrder_Example:
+          $ref: '#/components/examples/MOS_SubmitOrder_Example'
+        MOS_OrderFail_Example:
+          $ref: '#/components/examples/MOS_OrderFail_Example'
+        MOS_PayStart_Example:
+          $ref: '#/components/examples/MOS_PayStart_Example'
+        MOS_PaySuccess_Example:
+          $ref: '#/components/examples/MOS_PaySuccess_Example'
+        MOS_PayFail_Example:
+          $ref: '#/components/examples/MOS_PayFail_Example'
+        MOS_CancelOrder_Example:
+          $ref: '#/components/examples/MOS_CancelOrder_Example'
+        MOS_CancelFail_Example:
+          $ref: '#/components/examples/MOS_CancelFail_Example'
+        MOS_Summer_Promotion_Home_Example:
+          $ref: '#/components/examples/MOS_Summer_Promotion_Home_Example'
+        MOS_Summer_Promotion_Miaosha_Example:
+          $ref: '#/components/examples/MOS_Summer_Promotion_Miaosha_Example'
+        MOS_Summer_Promotion_Product_Example:
+          $ref: '#/components/examples/MOS_Summer_Promotion_Product_Example'
+        MOS_NewUserGift_View_Example:
+          $ref: '#/components/examples/MOS_NewUserGift_View_Example'
+        MOS_NewUserGift_Receive_Example:
+          $ref: '#/components/examples/MOS_NewUserGift_Receive_Example'
+        MOS_UserShare_Example:
+          $ref: '#/components/examples/MOS_UserShare_Example'
+        CRS_SubmitOrder_Example:
+          $ref: '#/components/examples/CRS_SubmitOrder_Example'
+        CRS_CancelOrder_Example:
+          $ref: '#/components/examples/CRS_CancelOrder_Example'
+        CRS_CancelFail_Example:
+          $ref: '#/components/examples/CRS_CancelFail_Example'
+        VRMS_CheckInNew_Example:
+          $ref: '#/components/examples/VRMS_CheckInNew_Example'
+        VRMS_CheckInModify_Example:
+          $ref: '#/components/examples/VRMS_CheckInModify_Example'
+        VRMS_Checkout_Example:
+          $ref: '#/components/examples/VRMS_Checkout_Example'
+        VRMS_SubmitOrder_Example:
+          $ref: '#/components/examples/VRMS_SubmitOrder_Example'
+        VRMS_CancelOrder_Example:
+          $ref: '#/components/examples/VRMS_CancelOrder_Example'
+    Position:
+      type: object
+      required:
+        - Latitude
+        - Longitude
+      properties:
+        Latitude:
+          type: number
+          format: double
+          example: 31.005
+        Longitude:
+          type: number
+          format: double
+          example: 121.4086111
+    UnitTypeInfo:
+      type: object
+      required:
+        - Name
+        - Count
+      properties:
+        Name:
+          type: string
+          example: '大床房'
+        Count:
+          type: integer
+          format: int32
+          example: 3
+    HotelInfo:
+      type: object
+      required:
+        - HotelID
+        - Name
+        - CityName
+        - HotelAddress
+      properties:
+        HotelID:
+          type: integer
+          format: int32
+          example: 30
+        HotelType:
+          type: string
+          example: '自营'
+        HotelBrand:
+          type: string
+          example: '斯维登'     
+        Name:
+          type: string
+          example: '三亚斯维登度假公寓（亚龙湾）'
+        CityName:
+          type: string
+          example: '三亚'
+        HotelAddress:
+          type: string
+          example: '公主郡1期35栋1单元102室'
+        HotelCompany:
+          type: string
+          example: 'XXX'
+        HotelNumber:
+          type: string
+          example: '3762'
+        OpenDate:
+          type: string
+          format: date-time
+          example: '2012-01-01 00:00:00.000'
+        UnitTypeInfos:
+          type: array
+          items:
+            $ref: '#/components/schemas/UnitTypeInfo'
+    MemberInfo:
+      type: object
+      required:
+        - MemberID
+        - Name
+        - Gender
+        - CreateTime
+      properties:
+        MemberID:
+          type: integer
+          format: int32
+          example: 161311
+        Name:
+          type: string
+          example: '程XX'
+        Mobile:
+          type: string
+          example: '180xxxxxxx'
+        CreateTime:
+          type: string
+          format: date-time
+          example: '2017-03-27 23:46:09.850'
+        MemberLevel:
+          type: integer
+          format: int32
+          example: 0
+        TotalRoomNights:
+          type: integer
+          format: int32
+          example: 0
+        MemberDate:
+          type: string
+          format: date
+          example: '1900-01-01'
+        BirthDay:
+          type: string
+          format: date
+          example: '1989-09-21'
+        IsKA:
+          type: boolean
+          example: false
+    OrderRateInfo:
+      type: object
+      required:
+        - OrderNumber
+      properties:
+        OrderNumber:
+          type: string
+          example: 'VRMS4002949'
+        OrderRateItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderRateItem'
+    OrderRateItem:
+      type: object
+      required:
+        - UnitInstanceName
+        - Ammount
+        - Date
+      properties:
+        UnitInstanceName:
+          type: string
+          example: 'LDGJ-0301-1716'
+        Ammount:
+          type: number
+          format: float
+          example: 460.00
+        Date:
+          type: string
+          format: date
+          example: '2018-05-28'
+    CheckInInfo:
+      type: object
+      required:
+        - CheckInID
+        - HotelID
+        - UnitInstanceName
+        - CreateTime
+      properties:
+        CheckInID:
+          type: integer
+          format: int32
+          example: 8
+        OperatorName:
+          type: string
+          example: '张三'
+        CreateTime:
+          type: string
+          format: date-time
+          example: '2017-03-27 23:46:09.850'
+        HotelID:
+          type: integer
+          format: int32
+          example: 30
+        ProductName:
+          type: string
+          example: '标准价'
+        UnitTypeName:
+          type: string
+          example: '大床房'
+        UnitInstanceName:
+          type: string
+          example: 'LDGJ-0301-1716'
+        SaleChannel:
+          type: string
+          example: '斯维登微官网' 
+        CheckInDate:
+          type: string
+          format: date
+          example: '2018-03-27'
+        CheckOutDate:
+          type: string
+          format: date
+          example: '2018-03-29'
+        OrderNumber:
+          type: string
+          example: CRS9522618
+        BillInfos:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillInfo'
+        GuestInfos:
+          type: array
+          items:
+            $ref: '#/components/schemas/GuestInfo'
+        MarketSegment:
+          type: string
+          example: '门市散客'
+    OrderInfo:
+      type: object
+      required:
+        - OrderNumber
+        - HotelID
+        - CreateTime
+      properties:
+        OrderNumber:
+          type: string
+          example: CRS9522618
+        HotelID:
+          type: integer
+          format: int32
+          example: 8
+        CreateTime:
+          type: string
+          format: date-time
+          example: '2017-03-27 23:46:09.850'
+        SaleChannel:
+          type: string
+          example: '斯维登微官网' 
+        CheckInDate:
+          type: string
+          format: date
+          example: '2018-03-27'
+        CheckOutDate:
+          type: string
+          format: date
+          example: '2018-03-29'
+        ProductName:
+          type: string
+          example: '标准价'
+        UnitTypeName:
+          type: string
+          example: '大床房'
+        RoomNumber:
+          type: integer
+          format: int32
+          example: 2 
+        TotalUnitAmount:
+          type: number
+          format: float
+          example: 20.0
+        PrepaymentAmount:
+          type: number
+          format: float
+          example: 10.0
+        PayType:
+          type: string
+          example: '微信付'
+        PeopleCount:
+          type: integer
+          format: int32
+          example: 2
+        ContactName:
+          type: string
+          example: '张三' 
+        ContactPhone:
+          type: string
+          example: '181xxxxxxx'
+        MemberID:
+          type: integer
+          format: int32
+          example: 13611
+        MarketSegment:
+          type: string
+          example: '门市散客'
+    WxUserInfo:
+      type: object
+      required:
+        - WxUserID
+        - NickName
+        - OpenID
+      properties:
+        WxUserID:
+          type: integer
+          format: int32
+          example: 136
+        NickName:
+          type: string
+          example: '维维'
+        OpenID:
+          type: string
+          example: 'oIZz1wcIraxhRnytKSBYOnbYwxnY'
+        UnionID:
+          type: string
+          example: 'uuuuu-xxxxx'
+        MemberID:
+          type: integer
+          format: int32
+          example: 13611
+        Gender:
+          type: string
+          example: '男'
+        Country:
+          type: string
+          example: '中国'
+        Province:
+          type: string
+          example: '上海'
+        Language:
+          type: string
+          example: '中文'
+        IsSubscribe:
+          type: boolean
+          example: true
+        FirstSubscribeTime:
+          type: string
+          format: date-time
+          example: '2017-03-27 23:46:09.850'
+        BindingMemberTime:
+          type: string
+          format: date-time
+          example: '2017-03-27 23:46:09.850'
+        ReferralCode:
+          type: string
+          example: '1'
+    BillInfo:
+      type: object
+      required:
+        - Date
+        - Category
+        - Amount
+      properties:
+        Date:
+          type: string
+          format: date
+          example: '2018-05-28'
+        Category:
+          type: string
+          example: '房费'
+        SubCategory:
+          type: string
+          example: '全天房'
+        Amount:
+          type: number
+          format: float
+          example: 560.00
+    GuestInfo:
+      type: object
+      required:
+        - Mobile
+        - Name
+        - Gendar
+        - IdentityCardNumber
+      properties:
+        Mobile:
+          type: string
+          example: '180xxxxxxx'
+        Name:
+          type: string
+          example: '程XX'
+        IdentityCardNumber:
+          type: string
+          example: '320120xxxxxx'
+        IdentityCardType:
+          type: string
+          example: '身份证'
+        Gendar:
+          type: string
+          example: '女' 
+    BizDataAppTypeEnum:
+        type: string
+        enum:
+          - 'WxMiniProgram'
+          - 'WxOfficalAccount'
+          - 'MicroOfficalSite'
+          - 'CRS'
+          - 'VRMS'
+        description: >
+            BizDataAppTypeEnum:
+             * WxMiniProgram - 微信小程序
+             * WxOfficalAccount - 微信公众号
+             * MicroOfficalSite - 微官网
+             * CRS - CRS系统
+             * VRMS - VRMS系统
+        example: 'CRS'
+    BizDataEventEnum:
+        type: string
+        enum:
+          - 'WxOA_Subscribe'
+          - 'WxOA_Scan'
+          - 'WxOA_OpenMenu'
+          - 'WxOA_UnSubscribe'
+          - 'WxMp_Open'
+          - 'WxMp_RegisterOrLogin'
+          - 'WxMp_SearchHotelByCity'
+          - 'WxMp_ViewHotel'
+          - 'WxMp_SubmitOrder'
+          - 'WxMp_OrderFail'
+          - 'WxMp_PayStart'
+          - 'WxMp_PaySuccess'
+          - 'WxMp_PayFail'
+          - 'Wxpp_CancelOrder'
+          - 'Wxpp_CancelFail'
+          - 'MOS_RegisterOrLogin'
+          - 'MOS_GetCurrentPosition'
+          - 'MOS_SearchHotelByCity'
+          - 'MOS_ViewHotel'
+          - 'MOS_ViewRoomType'
+          - 'MOS_SubmitOrder'
+          - 'MOS_OrderFail'
+          - 'MOS_PayStart'
+          - 'MOS_PaySuccess'
+          - 'MOS_PayFail'
+          - 'MOS_CancelOrder'
+          - 'MOS_CancelFail'
+          - 'MOS_Summer_Promotion_Home'
+          - 'MOS_Summer_Promotion_Miaosha'
+          - 'MOS_Summer_Promotion_Product'
+          - 'MOS_NewUserGift_View'  
+          - 'MOS_NewUserGift_Receive'
+          - 'MOS_UserShare'
+          - 'CRS_SubmitOrder'
+          - 'CRS_CancelOrder'
+          - 'CRS_CancelFail'
+          - 'VRMS_CheckInNew'
+          - 'VRMS_CheckInModify'
+          - 'VRMS_Checkout'
+          - 'VRMS_SubmitOrder'
+          - 'VRMS_CancelOrder'
+        description: >
+            BizDataEventEnum:
+             * WxOA_Subscribe - 公众号_关注
+             * WxOA_Scan - 公众号_扫描
+             * WxOA_OpenMenu - 公众号_菜单
+             * WxOA_UnSubscribe - 公众号_取消关注
+             * WxMp_Open - 小程序_打开
+             * WxMp_RegisterOrLogin - 小程序_会员绑定
+             * WxMp_SearchHotelByCity - 小程序_选择城市搜索门店
+             * WxMp_ViewHotel - 小程序_查看门店
+             * WxMp_SubmitOrder - 小程序_下单成功
+             * WxMp_OrderFail - 小程序_下单失败
+             * WxMp_PayStart - 小程序_支付开始
+             * WxMp_PaySuccess - 小程序_支付成功
+             * WxMp_PayFail - 小程序_支付失败
+             * WxMp_CancelOrder - 小程序_取消成功
+             * WxMp_CancelFail - 小程序_取消失败
+             * MOS_RegisterOrLogin - 微官网_会员绑定  
+             * MOS_GetCurrentPosition - 微官网_获取当前地点
+             * MOS_SearchHotelByCity - 微官网_选择城市搜索门店  
+             * MOS_ViewHotel - 微官网_查看门店  
+             * MOS_ViewRoomType - 微官网_查看房型  
+             * MOS_SubmitOrder - 微官网_下单成功  
+             * MOS_OrderFail - 微官网_下单失败  
+             * MOS_PayStart - 微官网_支付开始  
+             * MOS_PaySuccess - 微官网_支付成功
+             * MOS_PayFail - 微官网_支付失败  
+             * MOS_CancelOrder - 微官网_取消成功  
+             * MOS_CancelFail - 微官网_取消失败 
+             * MOS_Summer_Promotion_Home 微官网_夏季大促_首页
+             * MOS_Summer_Promotion_Miaosha 微官网_夏季大促_秒杀
+             * MOS_Summer_Promotion_Product 微官网_夏季大促_产品
+             * MOS_NewUserGift_View 微官网_新用户大礼包_浏览
+             * MOS_NewUserGift_Receive 微官网_新用户大礼包_领取
+             * MOS_UserShare 微官网_用户分享
+             * CRS_SubmitOrder - CRS_下单成功
+             * CRS_CancelOrder - CRS_取消成功
+             * CRS_CancelFail - CRS_取消失败
+             * VRMS_CheckInNew - VRMS_入住单新建
+             * VRMS_CheckInModify - VRMS_入住单修改
+             * VRMS_Checkout -  VRMS_入住单退房
+             * VRMS_SubmitOrder - VRMS_创建订单
+             * VRMS_CancelOrder - VRMS_取消订单
+  examples:
+    WxOA_Subscribe_Example:
+      value:
+        AppType: 'WxOfficalAccount'
+        Event: 'WxOA_Subscribe'
+        Time: '2018-05-28 09:59:28:123'
+        Origin: '营销支持中心'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+      description: WxOA_Subscribe 公众号_关注 事件示例
+    WxOA_Scan_Example:
+      value:
+        AppType: 'WxOfficalAccount'
+        Event: 'WxOA_Scan'
+        Time: '2018-05-28 09:59:28:123'
+        Origin: '营销支持中心'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+      description: WxOA_Subscribe 公众号_扫描 事件示例
+    WxOA_OpenMenu_Example:
+      value:
+        AppType: 'WxOfficalAccount'
+        Event: 'WxOA_OpenMenu'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MenuUrl: 'https://order.sweetome.com/Qinyou/Index'
+      description: WxOA_OpenMenu 公众号_菜单 事件示例
+    WxOA_UnSubscribe_Example:
+      value:
+        AppType: 'WxOfficalAccount'
+        Event: 'WxOA_UnSubscribe'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+      description: WxOA_UnSubscribe 公众号_取消关注 事件示例
+    WxMp_Open_Example:
+      value:
+        AppType: 'WxMiniProgram'
+        Event: 'WxMp_Open'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+      description: WxMp_Open 小程序_打开 事件示例
+    WxMp_RegisterOrLogin_Example:
+      value:
+        AppType: 'WxMiniProgram'
+        Event: 'WxMp_RegisterOrLogin'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 168
+      description: WxMp_RegisterOrLogin 小程序_会员绑定 事件示例
+    WxMp_SearchHotelByCity_Example:
+      value:
+        AppType: 'WxMiniProgram'
+        Event: 'WxMp_SearchHotelByCity'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 168
+        CityName: '杭州'
+        Position:
+          Latitude: 31.005
+          Longtitude: 121.4086111
+      description: WxMp_SearchHotelByCity 小程序_选择城市搜索门店 事件示例
+    WxMp_ViewHotel_Example:
+      value:
+        AppType: 'WxMiniProgram'
+        Event: 'WxMp_ViewHotel'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 168
+        HotelID: 30
+      description: WxMp_ViewHotel 小程序_查看门店 事件示例
+    WxMp_SubmitOrder_Example:
+      value:
+        AppType: 'WxMiniProgram'
+        Event: 'WxMp_SubmitOrder'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 13661
+        HotelID: 30
+        OrderNumber: 'CRS9522618'
+      description: WxMp_SubmitOrder 小程序_下单成功 事件示例
+    WxMp_OrderFail_Example:
+      value:
+        AppType: 'WxMiniProgram'
+        Event: 'WxMp_OrderFail'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 13661
+        HotelID: 30
+      description: WxMp_OrderFail 小程序_下单失败 事件示例
+    WxMp_PayStart_Example:
+      value:
+        AppType: 'WxMiniProgram'
+        Event: 'WxMp_PayStart'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 13661
+        OrderNumber: 'CRS9522618'
+      description: WxMp_PayStart 小程序_支付开始 事件示例
+    WxMp_PaySuccess_Example:
+      value:
+        AppType: 'WxMiniProgram'
+        Event: 'WxMp_PaySuccess'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 13661
+        OrderNumber: 'CRS9522618'
+      description: WxMp_PaySuccess 小程序_支付成功 事件示例
+    WxMp_PayFail_Example:
+      value:
+        AppType: 'WxMiniProgram'
+        Event: 'WxMp_PayFail'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 13661
+        OrderNumber: 'CRS9522618'
+      description: WxMp_PayFail 小程序_支付失败 事件示例
+    WxMp_CancelOrder_Example:
+      value:
+        AppType: 'WxMiniProgram'
+        Event: 'WxMp_CancelOrder'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 13661
+        OrderNumber: 'CRS9522618'
+      description: WxMp_CancelOrder 小程序_取消成功 事件示例
+    WxMp_CancelFail_Example:
+      value:
+        AppType: 'WxMiniProgram'
+        Event: 'WxMp_CancelFail'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 13661
+        OrderNumber: 'CRS9522618'
+      description: WxMp_CancelFail 小程序_取消失败 事件示例
+    MOS_RegisterOrLogin_Example:
+      value:
+        AppType: 'MicroOfficalSite'
+        Event: 'MOS_RegisterOrLogin'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        Origin: '营销支持中心'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 168
+      description: MOS_RegisterOrLogin 微官网_会员绑定 事件示例
+    MOS_GetCurrentPosition_Example:
+      value:
+        AppType: 'MicroOfficalSite'
+        Event: 'MOS_GetCurrentPosition'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        Position:
+          Latitude: 31.005
+          Longtitude: 121.4086111
+      description: MOS_GetCurrentPosition 微官网_获取当前地点 事件示例
+    MOS_SearchHotelByCity_Example:
+      value:
+        AppType: 'MicroOfficalSite'
+        Event: 'MOS_SearchHotelByCity'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 168
+        CityName: '杭州'
+      description: MOS_SearchHotelByCity 微官网_选择城市搜索门店 事件示例
+    MOS_ViewHotel_Example:
+      value:
+        AppType: 'MicroOfficalSite'
+        Event: 'MOS_ViewHotel'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        Origin: '营销支持中心'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 168
+        HotelID: 30
+      description: MOS_ViewHotel 微官网_查看门店 事件示例
+    MOS_ViewRoomType_Example:
+      value:
+        AppType: 'MicroOfficalSite'
+        Event: 'MOS_ViewRoomType'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 168
+        HotelID: 30
+        UnitTypeName: '大床房'
+      description: MOS_ViewRoomType 微官网_查看房型 事件示例
+    MOS_SubmitOrder_Example:
+      value:
+        AppType: 'MicroOfficalSite'
+        Event: 'MOS_SubmitOrder'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 13661
+        OrderNumber: 'CRS9522618'
+      description: MOS_SubmitOrder 微官网_下单成功 事件示例
+    MOS_OrderFail_Example:
+      value:
+        AppType: 'MicroOfficalSite'
+        Event: 'MOS_OrderFail'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 13661
+        OrderNumber: 'CRS9522618'
+      description: MOS_OrderFail 微官网_下单失败 事件示例
+    MOS_PayStart_Example:
+      value:
+        AppType: 'MicroOfficalSite'
+        Event: 'MOS_PayStart'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 13661
+        OrderNumber: 'CRS9522618'
+      description: MOS_PayStart 微官网_支付开始 事件示例
+    MOS_PaySuccess_Example:
+      value:
+        AppType: 'MicroOfficalSite'
+        Event: 'MOS_PaySuccess'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 13661
+        OrderNumber: 'CRS9522618'
+      description: MOS_PaySuccess 微官网_支付成功 事件示例
+    MOS_PayFail_Example:
+      value:
+        AppType: 'MicroOfficalSite'
+        Event: 'MOS_PayFail'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 13661
+        OrderNumber: 'CRS9522618'
+      description: MOS_PayFail 微官网_支付失败 事件示例
+    MOS_CancelOrder_Example:
+      value:
+        AppType: 'MicroOfficalSite'
+        Event: 'MOS_CancelOrder'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 13661
+        OrderNumber: 'CRS9522618'
+      description: MOS_CancelOrder 微官网_取消成功 事件示例
+    MOS_CancelFail_Example:
+      value:
+        AppType: 'MicroOfficalSite'
+        Event: 'MOS_CancelFail'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 13661
+        OrderNumber: 'CRS9522618'
+      description: MOS_CancelFail 微官网_取消失败 事件示例
+          - 'MOS_Summer_Promotion_Product'
+          - 'MOS_NewUserGift_View'  
+          - 'MOS_NewUserGift_Receive'
+          - 'MOS_UserShare'
+    MOS_Summer_Promotion_Home_Example:
+      value:
+        AppType: 'MicroOfficalSite'
+        Event: 'MOS_Summer_Promotion_Home'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 13661
+    MOS_Summer_Promotion_Miaosha_Example:
+      value:
+        AppType: 'MicroOfficalSite'
+        Event: 'MOS_Summer_Promotion_Miaosha'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 13661
+    MOS_Summer_Promotion_Product_Example:
+      value:
+        AppType: 'MicroOfficalSite'
+        Event: 'MOS_Summer_Promotion_Product'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 13661
+    MOS_NewUserGift_View_Example:
+      value:
+        AppType: 'MicroOfficalSite'
+        Event: 'MOS_NewUserGift_View'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 13661
+    MOS_NewUserGift_Receive_Example:
+      value:
+        AppType: 'MicroOfficalSite'
+        Event: 'MOS_NewUserGift_Receive'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        MemberID: 13661
+    MOS_UserShare_Example:
+      value:
+        AppType: 'MicroOfficalSite'
+        Event: 'MOS_UserShare'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        Description: '夏季促销'
+        MemberID: 13661
+    CRS_SubmitOrder_Example:
+      value:
+        AppType: 'CRS'
+        Event: 'CRS_SubmitOrder'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        Origin: '营销支持中心'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        HotelID: 30
+        OrderNumber: 'CRS9522618'
+      description: CRS_SubmitOrder CRS_下单成功 事件示例
+    CRS_CancelOrder_Example:
+      value:
+        AppType: 'CRS'
+        Event: 'CRS_CancelOrder'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        Origin: '营销支持中心'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        HotelID: 30
+        OrderNumber: 'CRS9522618'
+      description: CRS_CancelOrder CRS_取消成功 事件示例
+    CRS_CancelFail_Example:
+      value:
+        AppType: 'CRS'
+        Event: 'CRS_CancelFail'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        Origin: '营销支持中心'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        HotelID: 30
+        OrderNumber: 'CRS9522618'
+      description: CRS_CancelFail CRS_取消失败 事件示例
+    VRMS_CheckInNew_Example:
+      value:
+        AppType: 'VRMS'
+        Event: 'VRMS_CheckInNew'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        HotelID: 30
+        OrderInfo:
+          OrderNumber: 'VRMS2940448'
+          HotelID: 30,
+          CreateTime: '2017-05-27 23:46:09.850'
+          SaleChannel: '斯维登微官网'
+          CheckInDate: '2018-05-28'
+          CheckOutDate: '2018-05-29'
+          ProductName: '标准价'
+          UnitTypeName: '大床房'
+          UnitInstanceName: 'LDGJ-0301-1716'
+          RoomNumber: 2,
+          TotalUnitAmount: 20,
+          PrepaymentAmount: 10,
+          PayType: '微信付'
+          PeopleCount: 2,
+          ContactName: '张三'
+          ContactPhone: '181xxxxxxx'
+          MemberID: 13611
+          MarketSegment: '门市散客'
+        CheckInInfo:
+          OperatorName: '张三'
+          CheckInID: 8,
+          HotelID: 30,
+          ProductName: '标准价'
+          UnitTypeName: '大床房'
+          UnitInstanceName: 'LDGJ-0301-1716'
+          SaleChannel: '斯维登微官网'
+          CreateTime: '2017-05-28 19:46:09.850'
+          CheckInDate: '2018-05-28'
+          CheckOutDate: '2018-05-29'
+          OrderNumber: 'VRMS2940448'
+          MarketSegment: '门市散客'
+          BillInfos:
+            - Date: '2018-05-28'
+              Category: '房费'
+              SubCategory: '全天房'
+              Amount: 180.0
+            - Date: '2018-05-28'
+              Category: '服务费'
+              SubCategory: '清扫费'
+              Amount: 20.00
+            - Date: '2018-05-29'
+              Category: '房费'
+              SubCategory: '全天房'
+              Amount: 180.0
+            - Date: '2018-05-29'
+              Category: '消费项'
+              SubCategory: '矿泉水'
+              Amount: 5.0
+          GuestInfos:
+            - Mobile: '180xxxxxxxx'
+              Name: '程XX'
+              IdentityCardNumber: '310xxxxxxxxxxxxxxx'
+              IdentityCardType: '身份证'
+              Gendar: '男'
+            - Mobile: '138xxxxxxxx'
+              Name: '田XX'
+              IdentityCardNumber: '310xxxxxxxxxxxxxxx'
+              IdentityCardType: '身份证'
+              Gendar: '女'
+      description: VRMS_CheckInNew VRMS_入住单新建 事件示例
+    VRMS_CheckInModify_Example:
+      value:
+        AppType: 'VRMS'
+        Event: 'VRMS_CheckInModify'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        HotelID: 30
+        OrderInfo:
+          OrderNumber: 'VRMS2940448'
+          HotelID: 30,
+          CreateTime: '2017-05-27 23:46:09.850'
+          SaleChannel: '斯维登微官网'
+          CheckInDate: '2018-05-28'
+          CheckOutDate: '2018-05-29'
+          ProductName: '标准价'
+          UnitTypeName: '大床房'
+          UnitInstanceName: 'LDGJ-0301-1716'
+          RoomNumber: 2,
+          TotalUnitAmount: 20,
+          PrepaymentAmount: 10,
+          PayType: '微信付'
+          PeopleCount: 2,
+          ContactName: '张三'
+          ContactPhone: '181xxxxxxx'
+          MemberID: 13611
+          MarketSegment: '门市散客'
+        CheckInInfo:
+          OperatorName: '张三'
+          CheckInID: 8,
+          HotelID: 30,
+          ProductName: '标准价'
+          UnitTypeName: '大床房'
+          UnitInstanceName: 'LDGJ-0301-1716'
+          SaleChannel: '斯维登微官网'
+          CreateTime: '2017-05-28 19:46:09.850'
+          CheckInDate: '2018-05-28'
+          CheckOutDate: '2018-05-29'
+          OrderNumber: 'VRMS2940448'
+          MarketSegment: '门市散客'
+          BillInfos:
+            - Date: '2018-05-28'
+              Category: '房费'
+              SubCategory: '全天房'
+              Amount: 180.0
+            - Date: '2018-05-28'
+              Category: '服务费'
+              SubCategory: '清扫费'
+              Amount: 20.00
+            - Date: '2018-05-29'
+              Category: '房费'
+              SubCategory: '全天房'
+              Amount: 180.0
+            - Date: '2018-05-29'
+              Category: '消费项'
+              SubCategory: '矿泉水'
+              Amount: 5.0
+          GuestInfos:
+            - Mobile: '180xxxxxxxx'
+              Name: '程XX'
+              IdentityCardNumber: '310xxxxxxxxxxxxxxx'
+              IdentityCardType: '身份证'
+              Gendar: '男'
+            - Mobile: '138xxxxxxxx'
+              Name: '田XX'
+              IdentityCardNumber: '310xxxxxxxxxxxxxxx'
+              IdentityCardType: '身份证'
+              Gendar: '女'
+      description: VRMS_CheckInModify VRMS_入住单修改 事件示例
+    VRMS_Checkout_Example:
+      value:
+        AppType: 'VRMS'
+        Event: 'VRMS_Checkout'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        HotelID: 30
+        OrderInfo:
+          OrderNumber: 'VRMS2940448'
+          HotelID: 30,
+          CreateTime: '2017-05-27 23:46:09.850'
+          SaleChannel: '斯维登微官网'
+          CheckInDate: '2018-05-28'
+          CheckOutDate: '2018-05-29'
+          ProductName: '标准价'
+          UnitTypeName: '大床房'
+          UnitInstanceName: 'LDGJ-0301-1716'
+          RoomNumber: 2,
+          TotalUnitAmount: 20,
+          PrepaymentAmount: 10,
+          PayType: '微信付'
+          PeopleCount: 2,
+          ContactName: '张三'
+          ContactPhone: '181xxxxxxx'
+          MemberID: 13611
+          MarketSegment: '门市散客'
+        CheckInInfo:
+          OperatorName: '张三'
+          CheckInID: 8,
+          HotelID: 30,
+          ProductName: '标准价'
+          UnitTypeName: '大床房'
+          UnitInstanceName: 'LDGJ-0301-1716'
+          SaleChannel: '斯维登微官网'
+          CreateTime: '2017-05-28 19:46:09.850'
+          CheckInDate: '2018-05-28'
+          CheckOutDate: '2018-05-29'
+          OrderNumber: 'VRMS2940448'
+          MarketSegment: '门市散客'
+          BillInfos:
+            - Date: '2018-05-28'
+              Category: '房费'
+              SubCategory: '全天房'
+              Amount: 180.0
+            - Date: '2018-05-28'
+              Category: '服务费'
+              SubCategory: '清扫费'
+              Amount: 20.00
+            - Date: '2018-05-29'
+              Category: '房费'
+              SubCategory: '全天房'
+              Amount: 180.0
+            - Date: '2018-05-29'
+              Category: '消费项'
+              SubCategory: '矿泉水'
+              Amount: 5.0
+          GuestInfos:
+            - Mobile: '180xxxxxxxx'
+              Name: '程XX'
+              IdentityCardNumber: '310xxxxxxxxxxxxxxx'
+              IdentityCardType: '身份证'
+              Gendar: '男'
+            - Mobile: '138xxxxxxxx'
+              Name: '田XX'
+              IdentityCardNumber: '310xxxxxxxxxxxxxxx'
+              IdentityCardType: '身份证'
+              Gendar: '女'
+        description: VRMS_Checkout VRMS_入住单退房 事件示例
+    VRMS_SubmitOrder_Example:
+      value:
+        AppType: 'VRMS'
+        Event: 'VRMS_SubmitOrder'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        HotelID: 30
+        OrderInfo:
+          OrderNumber: 'VRMS2940448'
+          HotelID: 30,
+          CreateTime: '2017-05-27 23:46:09.850'
+          SaleChannel: '斯维登微官网'
+          CheckInDate: '2018-05-28'
+          CheckOutDate: '2018-05-29'
+          ProductName: '标准价'
+          UnitTypeName: '大床房'
+          UnitInstanceName: 'LDGJ-0301-1716'
+          RoomNumber: 2,
+          TotalUnitAmount: 20,
+          PrepaymentAmount: 10,
+          PayType: '微信付'
+          PeopleCount: 2,
+          ContactName: '张三'
+          ContactPhone: '181xxxxxxx'
+          MemberID: 13611
+          MarketSegment: '门市散客'
+        description: VRMS_SubmitOrder VRMS_创建订单 事件示例
+    VRMS_CancelOrder_Example:
+      value:
+        AppType: 'VRMS'
+        Event: 'VRMS_CancelOrder'
+        Time: '2018-05-28 09:59:28:123'
+        SessionID: 'ye0dtngpqnyeoihycpwv5ulo'
+        WxOpenID: 'oSmBgvxulqTKREfmGudlp2Ub_c3c'
+        HotelID: 30
+        OrderInfo:
+          OrderNumber: 'VRMS2940448'
+          HotelID: 30,
+          CreateTime: '2017-05-27 23:46:09.850'
+          SaleChannel: '斯维登微官网'
+          CheckInDate: '2018-05-28'
+          CheckOutDate: '2018-05-29'
+          ProductName: '标准价'
+          UnitTypeName: '大床房'
+          UnitInstanceName: 'LDGJ-0301-1716'
+          RoomNumber: 2,
+          TotalUnitAmount: 20,
+          PrepaymentAmount: 10,
+          PayType: '微信付'
+          PeopleCount: 2,
+          ContactName: '张三'
+          ContactPhone: '181xxxxxxx'
+          MemberID: 13611
+          MarketSegment: '门市散客'
+          Gendar: '女'
+        description: VRMS_CancelOrder VRMS_取消订单 事件示例

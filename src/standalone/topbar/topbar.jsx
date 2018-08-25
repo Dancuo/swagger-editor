@@ -152,6 +152,50 @@ export default class Topbar extends React.Component {
     this.downloadFile(yamlContent, `${fileName}.yaml`)
   }
 
+
+  saveSwdAPI = () => {
+    let editorContent = this.props.specSelectors.specStr()
+    let language = this.getDefinitionLanguage()
+    let fileName = 'swdapi.yaml'
+    let fs = require('fs')
+
+    if (this.hasParserErrors()) {
+      if (language === "yaml") {
+        const shouldContinue = confirm("Swagger-Editor isn't able to parse your API definition. Are you sure you want to save the editor content as YAML?")
+        if (!shouldContinue) return
+      } else {
+        return alert("Save as YAML is not currently possible because Swagger-Editor wasn't able to parse your API definiton.")
+      }
+    }
+
+    if (language === "yaml") {
+      //// the content is YAML,
+      //// so download as-is
+      return fs.writeFile(fileName, editorContent, function(err) {
+        if(err) {
+          return console.log(err);
+        }
+
+        console.log("Sweetome API file saved!");
+      });
+    }
+
+    //// the content is JSON,
+    //// so convert and download
+
+    // JSON String -> JS object
+    let jsContent = YAML.safeLoad(editorContent)
+    // JS object -> YAML string
+    let yamlContent = YAML.safeDump(jsContent)
+    fs.writeFile(fileName, yamlContent, function(err) {
+      if(err) {
+        return console.log(err);
+      }
+
+      console.log("Sweetome API file saved!");
+    });
+  }
+
   saveAsJson = () => {
     let editorContent = this.props.specSelectors.specStr()
     let fileName = this.getFileName()
@@ -338,6 +382,8 @@ export default class Topbar extends React.Component {
     }
 
     const saveAsElements = []
+
+    saveAsElements.push(<li><button type="button" onClick={this.saveSwdAPI}>Save Sweetome API</button></li>)
 
     if(isJson) {
       saveAsElements.push(<li><button type="button" onClick={this.saveAsJson}>Save as JSON</button></li>)
